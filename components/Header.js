@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import {APP_NAME} from '../config';
+import { APP_NAME } from '../config';
 import { signout, isAuth } from '../actions/auth';
 import {
   Collapse,
@@ -17,12 +17,11 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-
+import '.././node_modules/nprogress/nprogress.css';
 
 Router.onRouteChangeStart = url => NProgress.start();
 Router.onRouteChangeComplete = url => NProgress.done();
 Router.onRouteChangeError = url => NProgress.done();
-
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +39,15 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
+
+          <React.Fragment>
+                <NavItem>
+                  <Link href="/blogs">
+                    <NavLink>Blog</NavLink>
+                  </Link>
+                </NavItem>
+               </React.Fragment>
+          
             {!isAuth() && (
               <React.Fragment>
                 <NavItem>
@@ -55,29 +63,25 @@ const Header = () => {
               </React.Fragment>
             )}
 
-
-            
+              
+              
 
             {isAuth() && isAuth().role === 0 && (
               <NavItem>
-                <NavLink >
                 <Link href="/user">
-                  {`${isAuth().name}'s Dashboard`}
-                  </Link>
-                </NavLink>
+                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
+                </Link>
               </NavItem>
             )}
 
             {isAuth() && isAuth().role === 1 && (
               <NavItem>
-                <NavLink >
                 <Link href="/admin">
-                  {`${isAuth().name}'s Dashboard`}
-                  </Link>
-                </NavLink>
+                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
+                </Link>
               </NavItem>
             )}
-            
+
             {isAuth() && (
               <NavItem>
                 <NavLink style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>
@@ -85,11 +89,11 @@ const Header = () => {
                 </NavLink>
               </NavItem>
             )}
-
           </Nav>
         </Collapse>
       </Navbar>
     </div>
-    );
+  );
 };
+
 export default Header;

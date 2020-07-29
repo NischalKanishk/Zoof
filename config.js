@@ -1,6 +1,12 @@
-import getConfig from 'next/config'
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
-const {publicRuntimeConfig} = getConfig();
-
-export const API = publicRuntimeConfig.PRODUCTION?'https://seoblog.com' : 'http://localhost:8000/api'
+export const API = publicRuntimeConfig.PRODUCTION
+    ? publicRuntimeConfig.API_PRODUCTION
+    : publicRuntimeConfig.API_DEVELOPMENT;
 export const APP_NAME = publicRuntimeConfig.APP_NAME;
+export const DOMAIN = publicRuntimeConfig.PRODUCTION
+    ? publicRuntimeConfig.DOMAIN_DEVELOPMENT
+    : publicRuntimeConfig.DOMAIN_PRODUCTION;
+
+export const FB_APP_ID=publicRuntimeConfig.FB_APP_ID;
